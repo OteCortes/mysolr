@@ -26,16 +26,16 @@ class Solr(object):
     def HA(need_write=False):
         def wrap(fn):
             def exception_wrapper(*args, **kwargs):
-                print("Entrando en HADecorator. Lanzando:%s"%str(fn.__name__))
-                print("HADecorator args:%s "%str(dir(*args)))
-                print("HADecorator kwargs:%s "%str(kwargs))
-                print("HADecorator need_write Argument: %s"%(need_write))
+                #print("Entrando en HADecorator. Lanzando:%s"%str(fn.__name__))
+                #print("HADecorator args:%s "%str(dir(*args)))
+                #print("HADecorator kwargs:%s "%str(kwargs))
+                #print("HADecorator need_write Argument: %s"%(need_write))
                 try:
                     out = fn(*args, **kwargs)
                     return out
                 except requests.exceptions.ConnectionError as exception:
                     args[0]._get_working_url(Write=need_write)
-                    print("Inside the HADecorator new base_url selected %s"%args[0].base_url)
+                    #print("Inside the HADecorator new base_url selected %s"%args[0].base_url)
                     out = fn(*args, **kwargs)
                     return out
                 except:
@@ -61,7 +61,7 @@ class Solr(object):
         self.auth = auth
         self.base_url = None
         self._get_working_url(Write=True)
-        print("Base_URL %s"%self.base_url)
+        #print("Base_URL %s"%self.base_url)
         self.version = version
         if not version:
             self.version = self.get_version()
